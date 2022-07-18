@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  familydb:
+    image: mysql:latest
+    restart: always
+    command: --authentication_policy=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=familyapp
+      - MYSQL_PASSWORD=familyapp
+    ports:
+      - "3307:3306"
+    volumes:
+      - familydb:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+  familymemberapp:
+    build: ../../../familymemberapp
+    ports:
+      - "8090:8090"
+    volumes:
+      - .m2:/root/.m2
+    depends_on:
+      - familydb
+    stdin_open: true
+    tty: true
+  familyapp:
+    build: ../../../familyapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - familydb
+      - family-member-app
+    links:
+      - familymemberapp
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+volumes:
+  familydb:
