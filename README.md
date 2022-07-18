@@ -8,5 +8,7 @@
 `mvn docker-compose:restart`
 ## Stop
 `mvn docker-compose:stop`
+## Up
+`mvn docker-compose:up`
 ## Down
 `mvn-docker-compose:down`

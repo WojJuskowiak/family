@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS family;
+CREATE DATABASE IF NOT EXISTS family_member;
+GRANT ALL ON *.* TO 'familyapp'@'%';

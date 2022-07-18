@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "93c696c5-eba5-4bb3-b4f9-74005b2bf9e4",
+		"name": "Family App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getFamily",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/getFamily/?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"getFamily",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createFamily",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"family\": {\r\n        \"familyName\": \"Ranek\",\r\n        \"nrOfInfants\": 1,\r\n        \"nrOfChildren\": 1,\r\n        \"nrOfAdults\": 2\r\n    },\r\n    \"familyMembers\": [\r\n        {\r\n            \"familyName\": \"Ranek\",\r\n            \"givenName\": \"Marek\",\r\n            \"age\": 149\r\n        },\r\n        {\r\n            \"familyName\": \"Ranek\",\r\n            \"givenName\": \"Ewa\",\r\n            \"age\": 41\r\n        },\r\n        {\r\n            \"familyName\": \"Ranek\",\r\n            \"givenName\": \"Tomasz\",\r\n            \"age\": 12\r\n        },\r\n        {\r\n            \"familyName\": \"Ranek\",\r\n            \"givenName\": \"Monika\",\r\n            \"age\": 2\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/createFamily",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createFamily"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

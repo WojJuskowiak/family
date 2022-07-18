@@ -1,0 +1,6 @@
+CREATE TABLE family_member (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    family_id INT NOT NULL,
+    given_name VARCHAR(20) NOT NULL,
+    family_name VARCHAR(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
