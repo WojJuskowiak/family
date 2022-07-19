@@ -21,6 +21,9 @@ services:
       - .m2:/root/.m2
     depends_on:
       - familydb
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://familydb:3306/family_member?autoreconnect=true?useSSL=false"
+      FLYWAY_URL: "jdbc:mysql://familydb:3306/mysql"
     stdin_open: true
     tty: true
   familyapp:
@@ -30,6 +33,10 @@ services:
     depends_on:
       - familydb
       - family-member-app
+    environment:
+      FAMILYMEMBERAPP_URL: "http://familymemberapp:8090"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://familydb:3306/family?autoreconnect=true?useSSL=false"
+      FLYWAY_URL: "jdbc:mysql://familydb:3306/mysql"
     links:
       - familymemberapp
     volumes:

@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 public class CreateFamilyRequest {
     private Family family;
-
     private FamilyMember[] familyMembers;
 }

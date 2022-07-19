@@ -8,26 +8,31 @@ import com.example.familyapp.models.responses.GetFamilyResponse;
 import com.example.familyapp.repositories.FamilyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+@Service
 public class FamilyService {
-    private final FamilyRepository familyRepository;
-
-    private final RestTemplate restTemplate;
-
-    private final JdbcTemplate jdbcTemplate;
-
-    private String familyMemberAppUrl = "http://familymemberapp:8090";
+    private FamilyRepository familyRepository;
+    private RestTemplate restTemplate;
+    private JdbcTemplate jdbcTemplate;
+    @Value("${familymemberapp.url}")
+    private String familyMemberAppUrl;
 
     @Autowired
-    public FamilyService(FamilyRepository familyRepository, RestTemplateBuilder restTemplateBuilder, JdbcTemplate jdbcTemplate) {
+    public void setFamilyRepository(FamilyRepository familyRepository) {
         this.familyRepository = familyRepository;
-        this.restTemplate = restTemplateBuilder.build();
+    }
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -1,22 +1,17 @@
 package com.example.familyapp.controllers;
 
 import com.example.familyapp.models.requests.CreateFamilyRequest;
-import com.example.familyapp.repositories.FamilyRepository;
 import com.example.familyapp.services.FamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FamilyController {
-
-    private final FamilyService familyService;
-
+    private FamilyService familyService;
     @Autowired
-    public FamilyController(FamilyRepository familyRepository, RestTemplateBuilder restTemplateBuilder, JdbcTemplate jdbcTemplate) {
-        this.familyService = new FamilyService(familyRepository, restTemplateBuilder, jdbcTemplate);
+    public void setFamilyService(FamilyService familyService) {
+        this.familyService = familyService;
     }
 
     @GetMapping("getFamily")
@@ -28,5 +23,4 @@ public class FamilyController {
     public ResponseEntity<Object> createFamily(@RequestBody CreateFamilyRequest createFamilyRequest) {
         return this.familyService.createFamily(createFamilyRequest);
     }
-
 }

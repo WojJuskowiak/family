@@ -11,21 +11,17 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Family {
     @Id
     private Long id;
-
     private String familyName;
-
     private int nrOfInfants;
-
     private int nrOfChildren;
-
     private int nrOfAdults;
 
     @JsonIgnore
     public String getInvalidityReason(FamilyMember[] familyMembers) {
-        if(familyName == null) {
+        if (familyName == null) {
             return "Field familyName is mandatory.";
         }
-        if(!CommonValidators.isNameValid(familyName)) {
+        if (!CommonValidators.isNameValid(familyName)) {
             return "Family name is invalid. The family name should consist of at most 20 characters and the first letter should be capital.";
         }
         if (this.nrOfInfants < 0) {
@@ -51,13 +47,13 @@ public class Family {
                 case ADULT -> nrOfAdults++;
             }
         }
-        if(this.nrOfInfants != nrOfInfants) {
+        if (this.nrOfInfants != nrOfInfants) {
             return "Number of infants is invalid. Infants are family members of age 0-4.";
         }
-        if(this.nrOfChildren != nrOfChildren) {
+        if (this.nrOfChildren != nrOfChildren) {
             return "Number of children is invalid. Children are family members of age 5-15";
         }
-        if(this.nrOfAdults != nrOfAdults) {
+        if (this.nrOfAdults != nrOfAdults) {
             return "Number of adults is invalid. Adults are family members of age greater or equal to 16.";
         }
         return null;
