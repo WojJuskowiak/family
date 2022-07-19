@@ -28,7 +28,7 @@ public class FamilyMemberService {
 
     public ResponseEntity<Object> searchFamilyMembers(Long familyId) {
         String sqlQuerySelectFamilyMembersById = "SELECT * FROM family_member.family_member WHERE family_id = " + familyId + ';';
-        List<FamilyMember> response = this.jdbcTemplate.query(sqlQuerySelectFamilyMembersById, (rs, rowNum) -> new FamilyMember(rs.getLong("id"), rs.getLong("family_id"), rs.getString("family_name"), rs.getString("given_name")));
+        List<FamilyMember> response = jdbcTemplate.query(sqlQuerySelectFamilyMembersById, (rs, rowNum) -> new FamilyMember(rs.getLong("id"), rs.getLong("family_id"), rs.getString("family_name"), rs.getString("given_name")));
         if (response.isEmpty()) {
             return new ResponseEntity<>("Family members not found.", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
@@ -36,6 +36,6 @@ public class FamilyMemberService {
     }
 
     public ResponseEntity<Object> createFamilyMember(FamilyMember familyMember) {
-        return new ResponseEntity<>(this.familyMemberRepository.save(familyMember).getId(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(familyMemberRepository.save(familyMember).getId(), new HttpHeaders(), HttpStatus.CREATED);
     }
 }

@@ -16,11 +16,11 @@ public class FamilyController {
 
     @GetMapping("getFamily")
     public ResponseEntity<Object> getFamily(@RequestParam Long id) {
-        return this.familyService.getFamily(id);
+        return familyService.getFamily(id);
     }
 
     @PostMapping("createFamily")
     public ResponseEntity<Object> createFamily(@RequestBody CreateFamilyRequest createFamilyRequest) {
-        return this.familyService.createFamily(createFamilyRequest);
+        return familyService.createFamily(createFamilyRequest);
     }
 }

@@ -45,7 +45,7 @@ public class FamilyMember {
         if (!this.familyName.equals(familyName)) {
             return "Family name is invalid. The family name of family member should be the same as the family name of the family.";
         }
-        if (!CommonValidators.isNameValid(this.givenName)) {
+        if (!CommonValidators.isNameValid(givenName)) {
             return "Given name is invalid. The given name should consist of at most 20 characters and the first letter should be capital.";
         }
         if (!isAgeValid()) {

@@ -45,7 +45,7 @@ public class FamilyService {
 
     public ResponseEntity<Object> createFamily(CreateFamilyRequest createFamilyRequest) {
         Long familyId = getNextFamilyId();
-        ResponseEntity<Object> createFamilyMembersResponse = this.createFamilyMembers(createFamilyRequest.getFamilyMembers(), familyId, createFamilyRequest.getFamily().getFamilyName());
+        ResponseEntity<Object> createFamilyMembersResponse = createFamilyMembers(createFamilyRequest.getFamilyMembers(), familyId, createFamilyRequest.getFamily().getFamilyName());
         if(createFamilyMembersResponse.getStatusCode() != HttpStatus.CREATED) {
             return createFamilyMembersResponse;
         }
@@ -54,7 +54,7 @@ public class FamilyService {
 
     private Long getNextFamilyId() {
         String sqlQueryForNextId = "SELECT MAX(id) FROM family.family";
-        Long familyId = this.jdbcTemplate.queryForObject(sqlQueryForNextId, Long.class);
+        Long familyId = jdbcTemplate.queryForObject(sqlQueryForNextId, Long.class);
         if(familyId == null) {
             return 1L;
         }
@@ -66,7 +66,7 @@ public class FamilyService {
         if(familyInvalidityReason != null) {
             return new ResponseEntity<>(familyInvalidityReason, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(this.familyRepository.save(family).getId(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(familyRepository.save(family).getId(), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     private ResponseEntity<Object> createFamilyMembers(FamilyMember[] familyMembers, Long familyId, String familyName) {
@@ -87,7 +87,7 @@ public class FamilyService {
             return new ResponseEntity<>(reasonInfo, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
         HttpHeaders httpHeaders = prepareHttpHeaders();
-        Map<String, Object> body = this.prepareCreateFamilyMemberBody(familyMember, familyId);
+        Map<String, Object> body = prepareCreateFamilyMemberBody(familyMember, familyId);
         String url = familyMemberAppUrl + "/createFamilyMember";
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(body, httpHeaders);
         return restTemplate.postForEntity(url, httpEntity, Object.class);
@@ -102,12 +102,12 @@ public class FamilyService {
     }
 
     public ResponseEntity<Object> getFamily(Long id) {
-        Optional<Family> family = this.familyRepository.findById(id);
+        Optional<Family> family = familyRepository.findById(id);
         if(family.isEmpty()) {
             return new ResponseEntity<>("Family not found.", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
-        String url = this.familyMemberAppUrl + "/searchFamilyMembers?familyId=" + id;
-        ResponseEntity<FamilyMemberResponse[]> familyMembersResponse = this.restTemplate.getForEntity(url, FamilyMemberResponse[].class);
+        String url = familyMemberAppUrl + "/searchFamilyMembers?familyId=" + id;
+        ResponseEntity<FamilyMemberResponse[]> familyMembersResponse = restTemplate.getForEntity(url, FamilyMemberResponse[].class);
         if(familyMembersResponse.getStatusCode() != HttpStatus.OK) {
             return new ResponseEntity<>(familyMembersResponse.getBody(), new HttpHeaders(), familyMembersResponse.getStatusCode());
         }
